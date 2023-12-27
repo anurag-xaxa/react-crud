@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
-import "./index.css"
+import "./index.css";
+import '../Style/DisplayData.css';
+
 
 const DisplayData = () => {
   const [data, setData] = useState([]);
@@ -25,44 +27,57 @@ const DisplayData = () => {
         })       
     };
 
+   
   return (
     <>
     <div>
-      
-      <h1>Data from API:</h1>
-      <div><Link to={'/register'}>New User</Link></div>
-      <table class="table">
+      <div className='register'>
+        <Link className='reg-heading' to={'/register'} >
+          New Registration 
+        </Link>
+      </div>
+      <div className='register'>
+        <Link className='reg-heading' to={'/login'} >
+          Login 
+        </Link>
+      </div>
+      <div className='table-container'>
+      <h1>All Users Data:</h1>
+      <table className='data-table'>
       <thead>
         <tr>
-          <th scope="col">#</th>
+          <th scope="col">UserId</th>
           <th scope="col">Name</th>
           <th scope="col">Email</th>
-          <th scope="col">Operations</th>
+          <th colSpan={2} scope="col">Operations</th>
         </tr>
       </thead>
+      <tbody>
       {
         data.map((eachData) => {
         return (
     
-      <tbody>
-        <tr>
+        <tr key={eachData.id}>
           <th scope="row"> {eachData.id} </th>
           <td>{eachData.name}</td>
           <td> {eachData.email} </td>
-          
-         <td> <button ><Link to={`/update/${eachData.id}`}>Edit</Link></button> 
-          <button onClick= {() => deleteUser(eachData.id) } >Delete</button></td>
-          
+          <td>
+            <Link to={`/update/${eachData.id}`}>
+              <button type="button" className="edit-button btn btn-primary">
+                Edit
+                </button>
+                </Link>
+          </td>
+         {/* <td><button className='edit-button' ><Link to={`/update/${eachData.id}`}>Edit</Link></button></td>  */}
+         {/* <td className='delete-button'><button onClick= {() => deleteUser(eachData.id) } >Delete</button></td>   */}
+          <td><button type="button" className="delete-button btn btn-danger" onClick= {() => deleteUser(eachData.id) } >Delete</button></td>
         </tr>
-      
-      </tbody>
         )
       })
     }
-</table>    
-
-
-    </div>
+    </tbody>
+</table> </div>   
+</div>
     </>
   );
 };

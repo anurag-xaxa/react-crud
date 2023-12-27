@@ -1,4 +1,5 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const mysql = require('mysql');
 // const mongoose = require('mongoose')
 const cors = require('cors');
@@ -10,6 +11,7 @@ const PORT = 5000;
 //     console.log('Connected to Database')
 // })
 
+const secretKey = 'your-secret-key';
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -35,6 +37,11 @@ app.get('/', (req, res) => {
 
 app.get('/getUser/:id', (req, res) => {
   const id = req.params.id;
+
+  if (!id) {
+    return res.status(400).json({ error: 'No Id Found' });
+  }
+
   const query = 'SELECT * FROM users WHERE id = ?';
           connection.query(query, [id], (error, results) => {
             if (error) {
@@ -47,18 +54,47 @@ app.get('/getUser/:id', (req, res) => {
 
 
     app.post('/users', async (req, res) => {
-        const { name, email } = req.body;
+        const { name, email, password } = req.body;
+
+        if (!name || !email || !password) {
+          return res.status(400).json({ error: 'All fields are mandatory..!' });
+        }
 
         const query = await 'INSERT INTO users (name, email) VALUES (?, ?)';
-        connection.query(query, [name, email], (error, results) => {
+        connection.query(query, [name, email, password], (error, results) => {
     
     if (error) {
         console.error('Error executing query: ' + error.stack);
         return res.status(500).json({ error: 'Internal Server Error' });
     }
         res.status(201).json({ message: 'User created successfully', userId: results.insertId });
+        
         });
     })
+
+    app.post('/login', (req, res) => {
+      const { name, password } = req.body;
+    
+      if (!name || !password) {
+        return res.status(400).json({ error: 'name and password are required' });
+      }
+    
+      const query = 'SELECT * FROM users WHERE name = ? AND password = ?';
+      connection.query(query, [name, password], (error, results) => {
+        if (error) {
+          console.error('Error executing query:', error);
+          return res.status(500).json({ error: 'Internal Server Error' });
+        }
+    
+        if (results.length > 0) {
+          // User found, login successful
+          return res.status(200).json({ message: 'Login successful' });
+        } else {
+          // User not found or incorrect credentials
+          return res.status(401).json({ error: 'Invalid name or password' });
+        }
+      });
+    });
 
 
     app.get('/users', (req, res) => {
@@ -77,6 +113,10 @@ app.get('/getUser/:id', (req, res) => {
         app.put('/users/:id', (req, res) => {
           const userId = req.params.id;
           const { name, email } = req.body;
+
+          if (!name || !email) {
+            return res.status(400).json({ error: 'name and email are required' });
+          }
       
           const updateQuery = 'UPDATE users SET name = ?, email = ? WHERE id = ?';
           connection.query(updateQuery, [name, email, userId], (error, results) => {

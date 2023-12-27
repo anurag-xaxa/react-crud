@@ -1,30 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
-
+import { Form, Container } from 'react-bootstrap';
+import '../Style/RegistrationForm.css';
 
 
 export default function Register() {
     
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("")
     const navigate = useNavigate()  
+    
 
-    const handleChangeName = (e) => {
-        setName(e.target.value)
-        console.log(name)
-         
-    }
-    const handleChangeEmail = (e) => {
-        setEmail(e.target.value)
-        console.log(email)
-    }
+    const handleSubmit = (event) =>{
+       event.preventDefault();
 
-    const handleSubmit = () =>{
       axios.post("http://localhost:5000/users", {
         name:name,
-        email:email
+        email:email,
+        password:password
       }).then((response) => {
         // console.log(response);
         console.log(response.data);
@@ -32,32 +27,44 @@ export default function Register() {
         }); 
     }
 
-return(
+    return (
+        <div className="reg-heading"><h1>Registration Form</h1>
+            <div className="registration-form">
+            <Container>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="Name">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter your name"
+                name="name"
+                value={name}
+                onChange={e=>setName(e.target.value)}/>
+            </Form.Group>
     
-    <div className="card"> 
-        <div className="form">
-            <div className="title">
-                <p>Register Form</p>
-            </div>
-            <div className="space"></div>
-            <div>
-                <label>Name : </label>
-                <input type="text" name="name" value={name} onChange={handleChangeName}/>
-            </div>
-            <div>
-                <label>Email : </label>
-                <input type="text" name="email" value={email} onChange={handleChangeEmail}/>
-            </div>
-            
-            <div className="space"></div>
-            <div>
-                <button onClick={handleSubmit}>Register</button>
-                
-            </div>
-            <div className="space"></div>
+            <Form.Group controlId="Email">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter your email"
+                name="email"
+                value={email}
+                onChange={e=>setEmail(e.target.value)}/>  
+            </Form.Group>
+    
+            <Form.Group controlId="Password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter your password"
+                name="password"
+                value={password}
+                onChange={e=>setPassword(e.target.value)}/>  
+            </Form.Group>
+            <button type="button" variant="primary" className="register-button btn btn-primary">Register</button>
+          </Form>
+        </Container>
+        </div> 
         </div>
-
-    </div>
-);
-
+      );
 }
