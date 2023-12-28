@@ -4,7 +4,7 @@ import Register from './Components/Register';
 import LoginForm from './Components/LoginForm';
 import BlogPost from './Components/BlogPost.js';
 import DisplayData from './Components/DisplayData.js';
-import UpdateData from './Components/updateData.js';
+import UpdateData from './Components/UpdateData.js';
 import Home from './Components/Home.js';
 
 
@@ -19,7 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<DisplayData/>}></Route>
           <Route path="/home" element={<Home/>}></Route>
-            <Route path="/posts" element={<BlogPost/>}></Route>
+          <Route path="/posts" element={<BlogPost/>}></Route>
           <Route path="/login" element={<LoginForm/>}></Route>
           <Route path="/register" element={<Register/>}></Route>
           <Route path="/update/:id" element={<UpdateData/>}></Route>

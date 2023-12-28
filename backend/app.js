@@ -10,8 +10,7 @@ const PORT = 5000;
 // mongoose.connect(DB).then(() => {
 //     console.log('Connected to Database')
 // })
-
-const secretKey = 'your-secret-key';
+const secretKey = 'yourSecretKey';
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -60,7 +59,7 @@ app.get('/getUser/:id', (req, res) => {
           return res.status(400).json({ error: 'All fields are mandatory..!' });
         }
 
-        const query = await 'INSERT INTO users (name, email) VALUES (?, ?)';
+        const query = await 'INSERT INTO users (name, email, password) VALUES (?, ?, ?)';
         connection.query(query, [name, email, password], (error, results) => {
     
     if (error) {
@@ -74,11 +73,10 @@ app.get('/getUser/:id', (req, res) => {
 
     app.post('/login', (req, res) => {
       const { name, password } = req.body;
-    
+      
       if (!name || !password) {
         return res.status(400).json({ error: 'name and password are required' });
       }
-    
       const query = 'SELECT * FROM users WHERE name = ? AND password = ?';
       connection.query(query, [name, password], (error, results) => {
         if (error) {
@@ -87,9 +85,13 @@ app.get('/getUser/:id', (req, res) => {
         }
     
         if (results.length > 0) {
+          const data={
+            name:results.name
+          }
           // User found, login successful
-          return res.status(200).json({ message: 'Login successful' });
-        } else {
+          const token = jwt.sign(data, secretKey, {expiresIn:'86400'})
+          return res.status(200).json({ message: "Login successful", token });
+          } else {
           // User not found or incorrect credentials
           return res.status(401).json({ error: 'Invalid name or password' });
         }

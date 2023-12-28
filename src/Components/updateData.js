@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Form, Button, Container } from 'react-bootstrap';
+import { Form, Container } from 'react-bootstrap';
+import "../Style/UpdateData.css";
 
 
 const UpdateData = () => {   
@@ -9,21 +10,19 @@ const UpdateData = () => {
     const navigate = useNavigate();
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
 
     useEffect(() => {
          axios.get(`http://localhost:5000/getUser/${id}`)
             .then(result => {
                 setName(result.data[0].name)
                 setEmail(result.data[0].email)
-                setPassword(result.data[0].password)
             }).catch(err => console.log(err));
     }, [id]);
 
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        axios.put(`http://localhost:5000/users/${id}`, {name, email, password})
+        axios.put(`http://localhost:5000/users/${id}`, {name, email})
         .then(() => {
             navigate("/")
         })
@@ -31,7 +30,8 @@ const UpdateData = () => {
       }
 
       return (
-        <div className="registration-form">
+        <div>
+          <div className="update-form">
             <Container>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="Name">
@@ -53,22 +53,14 @@ const UpdateData = () => {
                 value={email}
                 onChange={e=>setEmail(e.target.value)}/>  
             </Form.Group>
-    
-            <Form.Group controlId="Password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Enter your password"
-                name="password"
-                value={password}
-                onChange={e=>setPassword(e.target.value)}/>  
-            </Form.Group>
-    
-            <Button variant="primary" type="submit">
-             UPDATE DATA
-            </Button>
+
+            <button type="submit" variant="primary" className="update-button btn btn-primary">Update</button>
+            {/* <Button variant="primary" type="submit">
+             Update Data
+            </Button> */}
           </Form>
         </Container>
+        </div>
         </div>
       );
 }

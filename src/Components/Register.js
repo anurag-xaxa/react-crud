@@ -61,7 +61,7 @@ export default function Register() {
                 value={password}
                 onChange={e=>setPassword(e.target.value)}/>  
             </Form.Group>
-            <button type="button" variant="primary" className="register-button btn btn-primary">Register</button>
+            <button type="submit" variant="primary" className="register-button btn btn-primary">Register</button>
           </Form>
         </Container>
         </div> 
