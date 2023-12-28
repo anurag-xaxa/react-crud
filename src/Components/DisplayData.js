@@ -42,7 +42,7 @@ const DisplayData = () => {
         </Link>
       </div>
       <div className='table-container'>
-      <h1>All Users Data:</h1>
+      <h1>All Users Data</h1>
       <table className='data-table'>
       <thead>
         <tr>
@@ -58,7 +58,7 @@ const DisplayData = () => {
         return (
     
         <tr key={eachData.id}>
-          <th scope="row"> {eachData.id} </th>
+          <td scope="row"> {eachData.id} </td>
           <td>{eachData.name}</td>
           <td> {eachData.email} </td>
           <td>

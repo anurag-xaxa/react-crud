@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const mysql = require('mysql');
+const bcrypt = require('bcrypt');
 // const mongoose = require('mongoose')
 const cors = require('cors');
 const User = require('./Models/userSchema')
@@ -55,12 +56,14 @@ app.get('/getUser/:id', (req, res) => {
     app.post('/users', async (req, res) => {
         const { name, email, password } = req.body;
 
+         const hashedPassword = await bcrypt.hash(password, 10);
+
         if (!name || !email || !password) {
           return res.status(400).json({ error: 'All fields are mandatory..!' });
         }
 
         const query = await 'INSERT INTO users (name, email, password) VALUES (?, ?, ?)';
-        connection.query(query, [name, email, password], (error, results) => {
+        connection.query(query, [name, email, hashedPassword], (error, results) => {
     
     if (error) {
         console.error('Error executing query: ' + error.stack);
@@ -71,32 +74,56 @@ app.get('/getUser/:id', (req, res) => {
         });
     })
 
-    app.post('/login', (req, res) => {
+    app.post('/login', async (req, res) => {
       const { name, password } = req.body;
-      
-      if (!name || !password) {
-        return res.status(400).json({ error: 'name and password are required' });
-      }
-      const query = 'SELECT * FROM users WHERE name = ? AND password = ?';
-      connection.query(query, [name, password], (error, results) => {
+      // console.log(password)
+      // if (!name || !password) {
+      //   return res.status(400).json({ error: 'name and password are required' });
+      // }
+      const hashedPassword = await bcrypt.hash(password, 10);
+      // console.log("hashedPasswordhashedPassword", hashedPassword)
+      const query = 'SELECT * FROM users WHERE name = ?';
+      connection.query(query, [req.body.name], (error, results) => {
         if (error) {
           console.error('Error executing query:', error);
           return res.status(500).json({ error: 'Internal Server Error' });
         }
-    
-        if (results.length > 0) {
-          const data={
-            name:results.name
-          }
-          // User found, login successful
-          const token = jwt.sign(data, secretKey, {expiresIn:'86400'})
-          return res.status(200).json({ message: "Login successful", token });
-          } else {
+         if(results.length > 0) {
+           bcrypt.compare(hashedPassword, results[0].password, (err, response) => {
+            console.log("results[0].password", results[0].password)
+            console.log("hashedPassword",hashedPassword)
+            if(err) {
+              return res.json({Error: "Password compare error"})
+            }
+            if(response) {
+              console.log("responseresponseresponse", response)
+              const name = results[0].name;
+              const token = jwt.sign({name}, secretKey, {expiresIn:'1d'})
+              res.Cookie('token',token)
+              return res.json({Status: "Success"})
+            } else {
+              return res.json({Error: "Password not matched"})
+            }
+          })
+          // const user = {
+          //   name:results.name,
+            
+          // }      
+          // console.log("results", results)
+         
+          // if (isPasswordMatch) {
+          // // User found, login successful
+          // const token = jwt.sign(user, secretKey, {expiresIn:'86400'})
+          // return res.status(200).json({ message: "Login successful", token });
+          // } else {
+          //   alert("error")
+          // }
+        } else {
           // User not found or incorrect credentials
           return res.status(401).json({ error: 'Invalid name or password' });
         }
       });
-    });
+    })
 
 
     app.get('/users', (req, res) => {

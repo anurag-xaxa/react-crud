@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Container } from 'react-bootstrap';
+
 import axios from "axios";
 import '../Style/LoginForm.css';
 
+
 const LoginForm = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [data, setData] = useState({
         name: "",
         password:"" 
@@ -24,13 +26,20 @@ const LoginForm = () => {
         const  { token } = res.data
         console.log(res.data);
         localStorage.setItem('jwtToken', token);
-        navigate('/Home');
+        navigate('/home')
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
+  // useEffect(() => {
+    
+  //   const token = localStorage.getItem('jwtToken');
+  //   if(token !== undefined){
+  //     navigate("/")
+  //   }
+  //   }, [navigate]); 
 
   return (
     <div className="reg-heading"><h1>Login Form</h1>

@@ -9,6 +9,7 @@ import Home from './Components/Home.js';
 
 
 
+
 import React from "react";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 
@@ -23,7 +24,7 @@ function App() {
           <Route path="/login" element={<LoginForm/>}></Route>
           <Route path="/register" element={<Register/>}></Route>
           <Route path="/update/:id" element={<UpdateData/>}></Route>
-          
+         
         </Routes>
       </BrowserRouter>
     </div>
