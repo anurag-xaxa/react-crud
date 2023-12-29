@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const mysql = require('mysql');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 // const mongoose = require('mongoose')
 const cors = require('cors');
 const User = require('./Models/userSchema')
@@ -64,7 +64,7 @@ app.get('/getUser/:id', (req, res) => {
 
         const query = await 'INSERT INTO users (name, email, password) VALUES (?, ?, ?)';
         connection.query(query, [name, email, hashedPassword], (error, results) => {
-    
+         
     if (error) {
         console.error('Error executing query: ' + error.stack);
         return res.status(500).json({ error: 'Internal Server Error' });
@@ -74,58 +74,7 @@ app.get('/getUser/:id', (req, res) => {
         });
     })
 
-    app.post('/login', async (req, res) => {
-      const { name, password } = req.body;
-      // console.log(password)
-      // if (!name || !password) {
-      //   return res.status(400).json({ error: 'name and password are required' });
-      // }
-      const hashedPassword = await bcrypt.hash(password, 10);
-      // console.log("hashedPasswordhashedPassword", hashedPassword)
-      const query = 'SELECT * FROM users WHERE name = ?';
-      connection.query(query, [req.body.name], (error, results) => {
-        if (error) {
-          console.error('Error executing query:', error);
-          return res.status(500).json({ error: 'Internal Server Error' });
-        }
-         if(results.length > 0) {
-           bcrypt.compare(hashedPassword, results[0].password, (err, response) => {
-            console.log("results[0].password", results[0].password)
-            console.log("hashedPassword",hashedPassword)
-            if(err) {
-              return res.json({Error: "Password compare error"})
-            }
-            if(response) {
-              console.log("responseresponseresponse", response)
-              const name = results[0].name;
-              const token = jwt.sign({name}, secretKey, {expiresIn:'1d'})
-              res.Cookie('token',token)
-              return res.json({Status: "Success"})
-            } else {
-              return res.json({Error: "Password not matched"})
-            }
-          })
-          // const user = {
-          //   name:results.name,
-            
-          // }      
-          // console.log("results", results)
-         
-          // if (isPasswordMatch) {
-          // // User found, login successful
-          // const token = jwt.sign(user, secretKey, {expiresIn:'86400'})
-          // return res.status(200).json({ message: "Login successful", token });
-          // } else {
-          //   alert("error")
-          // }
-        } else {
-          // User not found or incorrect credentials
-          return res.status(401).json({ error: 'Invalid name or password' });
-        }
-      });
-    })
-
-
+    
     app.get('/users', (req, res) => {
        
           const query = 'SELECT * FROM users';
@@ -176,7 +125,51 @@ app.get('/getUser/:id', (req, res) => {
         res.json({ message: 'User deleted successfully', affectedRows: results.affectedRows });
         });
     });
-        
+
+
+    // Login route
+    app.post('/login', (req, res) => {
+    const { name, password } = req.body;
+  
+  // Find the user in the database
+  connection.query('SELECT * FROM users WHERE name = ?', [name], (error, results, fields) => {
+     if (error) {
+       return res.status(500).json({ error: error });
+     }
+     let name = ''
+     let password1 = ''
+     for (let row of results) {
+      name = row.name
+      password1 = row.password
+     }
+     
+     if (results.length === 0) {
+       return res.status(404).json({ message: 'Name not found.' });
+     }
+ 
+     // Check if the password is correct
+     bcrypt.compare(password, password1, (err, isMatch) => {
+
+      // console.log("password", password)
+      // console.log("password1", password1)
+      
+      if (err) {
+         return res.status(500).json({ error: err });
+       }
+ 
+       if (!isMatch) {
+         return res.status(400).json({ message: 'password not match' });
+       }
+        // res.status(400).json({ message: 'password match' })
+       // Create a JWT token
+       const token = jwt.sign({ id: results[0].id }, secretKey, { expiresIn: '1h' });
+       res.status(200).json({ message: 'Logged in successfully.', token: token });
+      
+      });
+  });
+ });
+ 
+
 
 
 

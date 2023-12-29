@@ -41,6 +41,11 @@ const DisplayData = () => {
           Login 
         </Link>
       </div>
+      <div className='register'>
+        <Link className='reg-heading' to={'/logout'} >
+          Logout 
+        </Link>
+      </div>
       <div className='table-container'>
       <h1>All Users Data</h1>
       <table className='data-table'>
@@ -54,26 +59,32 @@ const DisplayData = () => {
       </thead>
       <tbody>
       {
-        data.map((eachData) => {
-        return (
-    
-        <tr key={eachData.id}>
-          <td scope="row"> {eachData.id} </td>
-          <td>{eachData.name}</td>
-          <td> {eachData.email} </td>
-          <td>
-            <Link to={`/update/${eachData.id}`}>
-              <button type="button" className="edit-button btn btn-primary">
-                Edit
-                </button>
-                </Link>
-          </td>
-         {/* <td><button className='edit-button' ><Link to={`/update/${eachData.id}`}>Edit</Link></button></td>  */}
-         {/* <td className='delete-button'><button onClick= {() => deleteUser(eachData.id) } >Delete</button></td>   */}
-          <td><button type="button" className="delete-button btn btn-danger" onClick= {() => deleteUser(eachData.id) } >Delete</button></td>
-        </tr>
-        )
-      })
+        // Inside your map function where you render table rows
+data.map((eachData) => {
+  return (
+    <tr key={eachData.id}>
+      <td>{eachData.id}</td>
+      <td>{eachData.name}</td>
+      <td>{eachData.email}</td>
+      <td>
+        <Link to={`/update/${eachData.id}`}>
+          <button type="button" className="edit-button btn btn-primary">
+            Edit
+          </button>
+        </Link>
+      </td>
+      <td>
+        <button
+          type="button"
+          className="delete-button btn btn-danger"
+          onClick={() => deleteUser(eachData.id)}
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  );
+})
     }
     </tbody>
 </table> </div>   
