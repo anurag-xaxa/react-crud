@@ -1,0 +1,14 @@
+/* .menu-bar {
+    text-align: center;
+} */
+
+.systos-logo {
+    max-width: 50px;
+    max-height: 80px;
+    height: auto;
+    border-radius: 90px;
+}
+
+.logout {
+    margin-left: 220%;
+}

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Container } from 'react-bootstrap';
+import '../assets/Style/LoginForm.css';
 import Cookies from 'js-cookie';
 
 import axios from "axios";
-import '../Style/LoginForm.css';
+
 
 
 const LoginForm = () => {
@@ -45,7 +46,13 @@ const LoginForm = () => {
   }, [navigate]);
 
   return (
+    
     <div className="reg-heading"><h1>Login Form</h1>
+     {/* <div className='register'>
+        <Link className='reg-heading' to={'/register'} >
+          New Registration 
+        </Link>
+      </div> */}
       <div className="login-form">
         <Container>
           <Form onSubmit={handleSubmit}>
@@ -74,6 +81,7 @@ const LoginForm = () => {
               className="register-button btn btn-primary">
               Login
             </button>
+            <p className="link">Don't have an account  <Link to="/register">SignUp</Link></p>
             
           </Form>
         </Container>

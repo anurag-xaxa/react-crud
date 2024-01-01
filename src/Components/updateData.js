@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Form, Container } from 'react-bootstrap';
-import "../Style/UpdateData.css";
+import "../assets/Style/UpdateData.css";
 
 
 const UpdateData = () => {   

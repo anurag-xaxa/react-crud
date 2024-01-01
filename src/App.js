@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import './App.css';
-import Register from './Components/Register';
+import RegisterForm from './Components/RegisterForm.js';
 import LoginForm from './Components/LoginForm';
 import BlogPost from './Components/BlogPost.js';
 import DisplayData from './Components/DisplayData.js';
@@ -25,7 +25,7 @@ function App() {
           <Route path="/home" element={<Home/>}></Route>
           </Route>
           <Route path="/login" element={<LoginForm/>}></Route>
-          <Route path="/register" element={<Register/>}></Route>
+          <Route path="/register" element={<RegisterForm/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

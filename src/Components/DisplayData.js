@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import "./index.css";
-import '../Style/DisplayData.css';
+import '../assets/Style/DisplayData.css';
+import '../assets/Style/LoginForm.css';
+import Header from './Headers';
 
 
 const DisplayData = () => {
@@ -31,21 +33,22 @@ const DisplayData = () => {
   return (
     <>
     <div>
-      <div className='register'>
+      {/* <div className='register'>
         <Link className='reg-heading' to={'/register'} >
           New Registration 
         </Link>
-      </div>
-      <div className='register'>
-        <Link className='reg-heading' to={'/login'} >
+      </div> */}
+      {/* <div className='register'>
+        <Link className='login-heading' to={'/login'} >
           Login 
         </Link>
-      </div>
-      <div className='register'>
-        <Link className='reg-heading' to={'/logout'} >
+      </div> */}
+      {/* <div className='register'>
+        <Link className="btn-logout" to={'/logout'} >
           Logout 
         </Link>
-      </div>
+      </div> */}
+      <div className='header-link'><Header/></div>
       <div className='table-container'>
       <h1>All Users Data</h1>
       <table className='data-table'>

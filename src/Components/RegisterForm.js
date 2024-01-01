@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Form, Container } from 'react-bootstrap';
-import '../Style/RegistrationForm.css';
+import '../assets/Style/RegistrationForm.css';
 
 
-export default function Register() {
+export default function RegisterForm() {
     
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -62,6 +62,8 @@ export default function Register() {
                 onChange={e=>setPassword(e.target.value)}/>  
             </Form.Group>
             <button type="submit" variant="primary" className="register-button btn btn-primary">Register</button>
+            <p className="link">Already have an account <Link to="/login">Login</Link></p>
+
           </Form>
         </Container>
         </div> 

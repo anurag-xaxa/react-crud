@@ -28,3 +28,11 @@
   .reg-heading {
     padding-top: 40px;
   }
+  
+  .login-heading {
+    text-decoration: none;
+  }
+  
+  .logout-heading {
+    text-decoration: none;
+  }

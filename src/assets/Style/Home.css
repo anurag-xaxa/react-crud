@@ -1,0 +1,15 @@
+/* .container {
+    display:"flex";
+    flex-direction: "row";
+} */
+.card1 {
+    width: '18px';
+    margin-top:'700px';
+    margin-left: '50px';
+}
+
+.category {
+    margin-top: 500px;
+    height: 60px;
+    width: 100px;
+}   
