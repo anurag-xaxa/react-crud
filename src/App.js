@@ -23,6 +23,7 @@ function App() {
           <Route path="/posts" element={<BlogPost/>}></Route>
           <Route path="/update/:id" element={<UpdateData/>}></Route>
           <Route path="/home" element={<Home/>}></Route>
+          
           </Route>
           <Route path="/login" element={<LoginForm/>}></Route>
           <Route path="/register" element={<RegisterForm/>}></Route>
