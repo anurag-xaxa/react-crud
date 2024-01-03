@@ -1,26 +1,19 @@
 import React from "react";
 import Header from "../Components/Headers";
 import Footer from "../Components/Footer";
-// import Image from 'react-bootstrap/Image';
-// import Col from 'react-bootstrap/Col';
-// import Row from 'react-bootstrap/Row';
-// import Container from 'react-bootstrap/Container';
-// import Images from '../assets/images/images.jpg';
-//import Wallpaper from '../assets/images/front-wallpaper.jpg';
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
 import '../assets/Style/Home.css';
-import card1 from '../assets/images/card-1.jpg';
-import card2 from '../assets/images/card-2.jpg';
-import card3 from '../assets/images/card-3.jpg';
+import RegistrationForm from '../Components/RegisterForm.js';
+// import LoginForm from '../Components/LoginForm.js';
+
+// import card1 from '../assets/images/card-1.jpg';
+// import card2 from '../assets/images/card-2.jpg';
+// import card3 from '../assets/images/card-3.jpg';
 import icon1 from '../assets/images/icon1.png';
 import icon2 from '../assets/images/icon2.png';
 import icon3 from '../assets/images/icon3.png';
 import icon4 from '../assets/images/icon4.png';
-
-
-
-
 
 
 const Home = () => {
@@ -30,8 +23,9 @@ const Home = () => {
       <div>
         <Header />
         <div className="main-container">
+          <RegistrationForm/>
         <div className="container"> </div>
-          <Card style={{ width: '18rem', marginTop: '700px', marginLeft: '50px' }}>
+          {/* <Card style={{ width: '18rem', marginTop: '700px', marginLeft: '50px' }}>
             <Card.Img style={{ height: "300px" }} src={card1} />
             <Card.Body>
               <Card.Title>Card 1</Card.Title>
@@ -65,12 +59,25 @@ const Home = () => {
               </Card.Text>
               <Button variant="primary">Go somewhere</Button>
             </Card.Body>
-          </Card>
+          </Card> */}
           </div>
        
         <br />
         <br />
-
+        <div className="container">
+      <div className="row">
+        {/* <div className="col-md-6">
+          <RegistrationForm />
+        </div> */}
+        {/* <div className="col-md-6">
+          <LoginForm />
+        </div> */}
+      </div>
+    </div>
+          {/* <div className>
+          <RegistrationForm/>
+          <LoginForm/>
+          </div> */}
       </div>
 
       <div className="category"><h1>Features</h1></div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Form, Container } from 'react-bootstrap';
 import '../assets/Style/LoginForm.css';
 import Cookies from 'js-cookie';
@@ -47,13 +47,15 @@ const LoginForm = () => {
 
   return (
     
-    <div className="reg-heading"><h1>Login Form</h1>
+    <div className="reg-heading">
+      
      {/* <div className='register'>
         <Link className='reg-heading' to={'/register'} >
           New Registration 
         </Link>
       </div> */}
       <div className="login-form">
+        <h3>Student Login</h3>
         <Container>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="Name">
@@ -81,7 +83,7 @@ const LoginForm = () => {
               className="register-button btn btn-primary">
               Login
             </button>
-            <p className="link">Don't have an account  <Link to="/register">SignUp</Link></p>
+            {/* <p className="link">Don't have an account  <Link to="/register">SignUp</Link></p> */}
             
           </Form>
         </Container>

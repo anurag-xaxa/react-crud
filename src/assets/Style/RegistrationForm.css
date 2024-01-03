@@ -2,13 +2,19 @@
     padding: inherit;
 }
 
-.registration-form {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
+registration-form {
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 100px;
+    margin-left: 40px;
+    /* padding: 20px; */
+    /* padding-top: 20px; */
     border: 1px solid #ddd;
     border-radius: 5px;
-    margin-top: 50px;
+    margin-top: 10px;
   }
   
   .form-group {
@@ -26,7 +32,10 @@
   
 
   .reg-heading {
-    padding-top: 40px;
+    padding-top: 120px;
+    width: 200px;
+    margin-left: 30px;
+    margin-top: 10px;
   }
   
   .login-heading {
@@ -35,4 +44,23 @@
   
   .logout-heading {
     text-decoration: none;
+  }
+  
+  h3 {
+    font-size:large; 
+    font-family: fantasy;
+    color: white;
+    
+  }
+
+#button {
+    color: white;
+    background-color: dimgrey;
+    border-radius: 8px;
+    border: none;
+  }
+
+  .input {
+    border-radius: 8px;
+    border: none;
   }

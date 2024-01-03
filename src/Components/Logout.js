@@ -7,14 +7,10 @@ import '../assets/Style/LoginForm.css'
 const Logout = () => {
     const navigate = useNavigate()
     const onClickLogout = () => {
-        Cookies.set('jwtToken', " ", {
-            expires: 30, 
-            path: "/"
-           });
-        Cookies.remove("jwtToken")
-        navigate("/login")
-}
-
+        console.log(Cookies)
+            Cookies.remove("jwtToken")
+            navigate("/")
+    }
     return (
         <div className='btn-container'>
             {/* <h1>Welcome to Home Page</h1> */}
